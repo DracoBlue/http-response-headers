@@ -7,13 +7,19 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.expression.Expression;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class HttpResponseHeaderHandlerInterceptor extends HandlerInterceptorAdapter implements HandlerInterceptor {
+	
+	private SpelExpressionParser parser;
+	
 	public HttpResponseHeaderHandlerInterceptor() {
 		super();
+		this.parser = new SpelExpressionParser(); 
 	}
 	
 	protected final void assignHttpResponseHeaders(
@@ -24,7 +30,19 @@ public class HttpResponseHeaderHandlerInterceptor extends HandlerInterceptorAdap
 		final List<HttpResponseHeader> httpResponseHeaders = this.getHttpResponseHeader(request, response, handler);
 		
 		for (HttpResponseHeader httpResponseHeader : httpResponseHeaders) {
-			response.setHeader(httpResponseHeader.name(), httpResponseHeader.value());
+			String name = httpResponseHeader.name();
+			String value = httpResponseHeader.value();
+			
+			
+			if (httpResponseHeader.nameExpression()) {
+				name = (String) parser.parseExpression(name).getValue();
+			}
+			
+			if (httpResponseHeader.valueExpression()) {
+				value = (String) parser.parseExpression(value).getValue();
+			}
+			
+			response.setHeader(name, value);
 		}
 	}
 	

@@ -17,4 +17,14 @@ public @interface HttpResponseHeader {
 	 * 
 	 */
 	String value() default "";
+	
+	/**
+	 * 
+	 */
+	boolean valueExpression() default false;
+
+	/**
+	 * 
+	 */
+	boolean nameExpression() default false;
 }

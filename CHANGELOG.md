@@ -2,5 +2,6 @@
 
 ## DEV
 
+- SPEL with `nameExpression=true` and `valueExpression=true` added
 - initial version
 

@@ -29,8 +29,7 @@ public class NotAnnotatedTestController
 			}
 		)
 	public String handleWithEmptyMultipleExtraAnnotatedMethod() {
-		return null;
-		
+		return null;	
 	}
 	
 }

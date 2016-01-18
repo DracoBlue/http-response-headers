@@ -48,6 +48,22 @@ public class FullyAnnotatedTestController  {
 }
 ```
 
+### Spring Expression Language
+
+It's also possible, to use [SpEL](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/expressions.html) for 
+the `name` and `value` property.
+
+To enable parsing for the `value` property, enable it with `valueExpression=true`.
+
+For example:
+``` java
+@HttpResponseHeader(name="Cache-Control", value="'max-age=' + (60*5)", valueExpression=true)
+```
+will result in:
+``` text
+Cache-Control: max-age=300
+```
+
 ## Installation
 
 TBD
