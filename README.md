@@ -1,7 +1,7 @@
-# net.dracoblue.spring:response-headers
+# net.dracoblue.spring:http-response-headers
 
-* Latest Release: [![GitHub version](https://badge.fury.io/gh/DracoBlue%2Fresponse-headers.png)](https://github.com/DracoBlue/response-headers/releases)
-* Build Status: [![Build Status](https://secure.travis-ci.org/DracoBlue/response-headers.png?branch=master)](http://travis-ci.org/DracoBlue/response-headers)
+* Latest Release: [![GitHub version](https://badge.fury.io/gh/DracoBlue%2Fhttp-response-headers.png)](https://github.com/DracoBlue/http-response-headers/releases)
+* Build Status: [![Build Status](https://secure.travis-ci.org/DracoBlue/http-response-headers.png?branch=master)](http://travis-ci.org/DracoBlue/http-response-headers)
 
 This small java library is used with spring to use Annotations for HTTP Response Headers.
 

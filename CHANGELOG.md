@@ -1,4 +1,4 @@
-# net.dracoblue.spring:response-headers CHANGELOG
+# net.dracoblue.spring:http-response-headers CHANGELOG
 
 ## DEV
 
