@@ -55,13 +55,15 @@ public class FullyAnnotatedControllerTest
 				controller.getClass().getMethod("handleExtraAnnotatedMethod"));
 		
 		interceptor.preHandle(request, response, handler);
+		assertNotNull(response.getHeader("X-Key-For-Response-Header"));
+		assertTrue(response.getHeader("X-Key-For-Response-Header").equals("X-Value-For-Response-Header-Class"));
 		assertNotNull(response.getHeader("X-Key-For-Response-Headers-One"));
 		assertTrue(response.getHeader("X-Key-For-Response-Headers-One").equals("X-Value-For-Response-Headers-One-Class"));
 		assertNotNull(response.getHeader("X-Key-For-Response-Headers-Two"));
 		assertTrue(response.getHeader("X-Key-For-Response-Headers-Two").equals("X-Value-For-Response-Headers-Two-Class"));
 		assertNotNull(response.getHeader("X-Key"));
 		assertTrue(response.getHeader("X-Key").equals("X-Value-Method"));
-		assertEquals(3, response.getHeaderNames().size());
+		assertEquals(4, response.getHeaderNames().size());
 	}
 	
 	@Test
@@ -78,7 +80,11 @@ public class FullyAnnotatedControllerTest
 		assertTrue(response.getHeader("X-Key-One").equals("X-Value-One-Method"));
 		assertNotNull(response.getHeader("X-Key-For-Response-Header"));
 		assertTrue(response.getHeader("X-Key-For-Response-Header").equals("X-Value-For-Response-Header-Class"));
-		assertEquals(3, response.getHeaderNames().size());
+		assertNotNull(response.getHeader("X-Key-For-Response-Headers-One"));
+		assertTrue(response.getHeader("X-Key-For-Response-Headers-One").equals("X-Value-For-Response-Headers-One-Class"));
+		assertNotNull(response.getHeader("X-Key-For-Response-Headers-Two"));
+		assertTrue(response.getHeader("X-Key-For-Response-Headers-Two").equals("X-Value-For-Response-Headers-Two-Class"));
+		assertEquals(5, response.getHeaderNames().size());
 	}
 	
 	@Test
@@ -91,7 +97,11 @@ public class FullyAnnotatedControllerTest
 		interceptor.preHandle(request, response, handler);
 		assertNotNull(response.getHeader("X-Key-For-Response-Header"));
 		assertTrue(response.getHeader("X-Key-For-Response-Header").equals("X-Value-For-Response-Header-Class"));
-		assertEquals(1, response.getHeaderNames().size());
+		assertNotNull(response.getHeader("X-Key-For-Response-Headers-One"));
+		assertTrue(response.getHeader("X-Key-For-Response-Headers-One").equals("X-Value-For-Response-Headers-One-Class"));
+		assertNotNull(response.getHeader("X-Key-For-Response-Headers-Two"));
+		assertTrue(response.getHeader("X-Key-For-Response-Headers-Two").equals("X-Value-For-Response-Headers-Two-Class"));
+		assertEquals(3, response.getHeaderNames().size());
 	}
 
 	@Test
@@ -121,7 +131,11 @@ public class FullyAnnotatedControllerTest
 		interceptor.preHandle(request, response, handler);
 		assertNotNull(response.getHeader("X-Key-For-Response-Header"));
 		assertTrue(response.getHeader("X-Key-For-Response-Header").equals("X-Value-Method"));
-		assertEquals(1, response.getHeaderNames().size());
+		assertNotNull(response.getHeader("X-Key-For-Response-Headers-One"));
+		assertTrue(response.getHeader("X-Key-For-Response-Headers-One").equals("X-Value-For-Response-Headers-One-Class"));
+		assertNotNull(response.getHeader("X-Key-For-Response-Headers-Two"));
+		assertTrue(response.getHeader("X-Key-For-Response-Headers-Two").equals("X-Value-For-Response-Headers-Two-Class"));
+		assertEquals(3, response.getHeaderNames().size());
 	}
 	
 	@Test
@@ -132,10 +146,12 @@ public class FullyAnnotatedControllerTest
 				controller.getClass().getMethod("handleOverrideClassAnnotationWithSingleHeaderMethod"));
 		
 		interceptor.preHandle(request, response, handler);
+		assertNotNull(response.getHeader("X-Key-For-Response-Header"));
+		assertTrue(response.getHeader("X-Key-For-Response-Header").equals("X-Value-For-Response-Header-Class"));
 		assertNotNull(response.getHeader("X-Key-For-Response-Headers-One"));
 		assertTrue(response.getHeader("X-Key-For-Response-Headers-One").equals("X-Value-For-Response-Headers-One-Method"));
 		assertNotNull(response.getHeader("X-Key-For-Response-Headers-Two"));
 		assertTrue(response.getHeader("X-Key-For-Response-Headers-Two").equals("X-Value-For-Response-Headers-Two-Class"));
-		assertEquals(2, response.getHeaderNames().size());
+		assertEquals(3, response.getHeaderNames().size());
 	}
 }

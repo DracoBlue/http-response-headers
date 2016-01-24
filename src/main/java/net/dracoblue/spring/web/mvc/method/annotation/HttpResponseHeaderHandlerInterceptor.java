@@ -59,39 +59,23 @@ public class HttpResponseHeaderHandlerInterceptor extends HandlerInterceptorAdap
 
 		List<HttpResponseHeader> httpResponseHeadersList = new ArrayList<HttpResponseHeader>();
 
+		HttpResponseHeaders beanHttpResponseHeaders = handlerMethod.getBeanType().getAnnotation(HttpResponseHeaders.class);
+		if (beanHttpResponseHeaders != null) {
+			httpResponseHeadersList.addAll(Arrays.asList(beanHttpResponseHeaders.value()));
+		}
+
+		HttpResponseHeader beanHttpResponseHeader = handlerMethod.getBeanType().getAnnotation(HttpResponseHeader.class);
+		if (beanHttpResponseHeader != null) {
+			httpResponseHeadersList.add(beanHttpResponseHeader);
+		}
+
 		HttpResponseHeaders methodHttpResponseHeaders = handlerMethod.getMethodAnnotation(HttpResponseHeaders.class);
-		HttpResponseHeader methodHttpResponseHeader = handlerMethod.getMethodAnnotation(HttpResponseHeader.class);
-
-		/*
-		 * Use @HttpResponseHeaders class annotation, if there is no method annotation
-		 */
-		if (methodHttpResponseHeaders == null) {
-			HttpResponseHeaders beanHttpResponseHeaders = handlerMethod.getBeanType().getAnnotation(HttpResponseHeaders.class);
-			if (beanHttpResponseHeaders != null) {
-				httpResponseHeadersList.addAll(Arrays.asList(beanHttpResponseHeaders.value()));
-			}
-		}
-
-		/*
-		 * Use @HttpResponseHeader class annotation, if there is no method annotation
-		 */
-		if (methodHttpResponseHeader == null) {
-			HttpResponseHeader beanHttpResponseHeader = handlerMethod.getBeanType().getAnnotation(HttpResponseHeader.class);
-			if (beanHttpResponseHeader != null) {
-				httpResponseHeadersList.add(beanHttpResponseHeader);
-			}
-		}
-		
-		/*
-		 * Override with @HttpResponseHeaders method annotation
-		 */
 		if (methodHttpResponseHeaders != null) {
 			httpResponseHeadersList.addAll(Arrays.asList(methodHttpResponseHeaders.value()));
 		}
 		
-		/*
-		 * Override with @HttpResponseHeader method annotation
-		 */
+		HttpResponseHeader methodHttpResponseHeader = handlerMethod.getMethodAnnotation(HttpResponseHeader.class);
+		
 		if (methodHttpResponseHeader != null) {
 			httpResponseHeadersList.add(methodHttpResponseHeader);
 		}
