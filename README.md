@@ -57,11 +57,23 @@ To enable parsing for the `value` property, enable it with `valueExpression=true
 
 For example:
 ``` java
-@HttpResponseHeader(name="Cache-Control", value="'max-age=' + (60*5)", valueExpression=true)
+@HttpResponseHeader(name="Cache-Control", value="#{'max-age=' + (60*5)}", valueExpression=true)
 ```
 will result in:
 ``` text
 Cache-Control: max-age=300
+```
+
+If you use that to read properties (like `java.version`):
+
+``` java
+@HttpResponseHeader(name="X-Java-Version", value="#{environment.getProperty('java.version')}", valueExpression=true)
+```
+
+will result in:
+
+``` text
+X-Java-Version: 1.8.0_25
 ```
 
 ## Installation

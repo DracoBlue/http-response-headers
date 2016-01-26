@@ -4,40 +4,41 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.mock.web.MockHttpServletRequest;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.IntegrationTest;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.web.method.HandlerMethod;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
-import net.dracoblue.spring.web.mvc.method.annotation.HttpResponseHeaderHandlerInterceptor;
-
-/**
- * Unit test for simple App.
- */
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = HttpResponseHeadersTestApplication.class)
+@WebAppConfiguration
+@IntegrationTest("server.port:0") 
 public class ExpressionControllerTest 
 {
-	private HttpResponseHeaderHandlerInterceptor interceptor;
+	private MockMvc mockMvc;
 	
-	private MockHttpServletRequest request;
-	
-	private MockHttpServletResponse response;
-	
-	private final ExpressionController controller = new ExpressionController();
-	
+	@Autowired
+	private WebApplicationContext webApplicationContext;
+
 	@Before
 	public void setUp() {
-		interceptor = new HttpResponseHeaderHandlerInterceptor();
-		request = new MockHttpServletRequest();
-		response = new MockHttpServletResponse();
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 
 	@Test
 	public void testValueExpression() throws Exception {
-		
-		final HandlerMethod handler = new HandlerMethod(
-				controller, 
-				controller.getClass().getMethod("handleValueExpression"));
-		
-		interceptor.preHandle(request, response, handler);
+		MockHttpServletResponse response = this.mockMvc
+				.perform(MockMvcRequestBuilders
+				.get("/handleValueExpression"))
+				.andReturn().getResponse();
 		assertNotNull(response.getHeader("X-Key"));
 		assertTrue(response.getHeader("X-Key").equals("X-Value-Method"));
 		assertEquals(1, response.getHeaderNames().size());
@@ -45,12 +46,11 @@ public class ExpressionControllerTest
 	
 	@Test
 	public void testMultipleValueExpressions() throws Exception {
+		MockHttpServletResponse response = this.mockMvc
+				.perform(MockMvcRequestBuilders
+				.get("/handleMultipleValueExpressions"))
+				.andReturn().getResponse();
 		
-		final HandlerMethod handler = new HandlerMethod(
-				controller, 
-				controller.getClass().getMethod("handleMultipleValueExpressions"));
-		
-		interceptor.preHandle(request, response, handler);
 		assertNotNull(response.getHeader("X-Key-Two"));
 		assertTrue(response.getHeader("X-Key-Two").equals("X-Value-Two-Method"));
 		assertNotNull(response.getHeader("X-Key-One"));
@@ -60,12 +60,11 @@ public class ExpressionControllerTest
 
 	@Test
 	public void testNameExpression() throws Exception {
+		MockHttpServletResponse response = this.mockMvc
+				.perform(MockMvcRequestBuilders
+				.get("/handleNameExpression"))
+				.andReturn().getResponse();
 		
-		final HandlerMethod handler = new HandlerMethod(
-				controller, 
-				controller.getClass().getMethod("handleNameExpression"));
-		
-		interceptor.preHandle(request, response, handler);
 		assertNotNull(response.getHeader("X-Key"));
 		assertTrue(response.getHeader("X-Key").equals("X-Value-Method"));
 		assertEquals(1, response.getHeaderNames().size());
@@ -73,12 +72,11 @@ public class ExpressionControllerTest
 	
 	@Test
 	public void testMultipleNameExpressions() throws Exception {
+		MockHttpServletResponse response = this.mockMvc
+				.perform(MockMvcRequestBuilders
+				.get("/handleMultipleNameExpressions"))
+				.andReturn().getResponse();
 		
-		final HandlerMethod handler = new HandlerMethod(
-				controller, 
-				controller.getClass().getMethod("handleMultipleNameExpressions"));
-		
-		interceptor.preHandle(request, response, handler);
 		assertNotNull(response.getHeader("X-Key-Two"));
 		assertTrue(response.getHeader("X-Key-Two").equals("X-Value-Two-Method"));
 		assertNotNull(response.getHeader("X-Key-One"));
@@ -88,12 +86,11 @@ public class ExpressionControllerTest
 
 	@Test
 	public void testNameAndValueExpression() throws Exception {
-		
-		final HandlerMethod handler = new HandlerMethod(
-				controller, 
-				controller.getClass().getMethod("handleNameAndValueExpression"));
-		
-		interceptor.preHandle(request, response, handler);
+		MockHttpServletResponse response = this.mockMvc
+				.perform(MockMvcRequestBuilders
+				.get("/handleNameAndValueExpression"))
+				.andReturn().getResponse();
+
 		assertNotNull(response.getHeader("X-Key"));
 		assertTrue(response.getHeader("X-Key").equals("X-Value-Method"));
 		assertEquals(1, response.getHeaderNames().size());
@@ -101,12 +98,11 @@ public class ExpressionControllerTest
 	
 	@Test
 	public void testMultipleNameAndValueExpressions() throws Exception {
+		MockHttpServletResponse response = this.mockMvc
+				.perform(MockMvcRequestBuilders
+				.get("/handleMultipleNameAndValueExpressions"))
+				.andReturn().getResponse();
 		
-		final HandlerMethod handler = new HandlerMethod(
-				controller, 
-				controller.getClass().getMethod("handleMultipleNameAndValueExpressions"));
-		
-		interceptor.preHandle(request, response, handler);
 		assertNotNull(response.getHeader("X-Key-Two"));
 		assertTrue(response.getHeader("X-Key-Two").equals("X-Value-Two-Method"));
 		assertNotNull(response.getHeader("X-Key-One"));
@@ -116,15 +112,23 @@ public class ExpressionControllerTest
 
 	@Test
 	public void testCalculation() throws Exception {
+		MockHttpServletResponse response = this.mockMvc
+			.perform(MockMvcRequestBuilders
+			.get("/handleCalculation"))
+			.andReturn().getResponse();
 		
-		final HandlerMethod handler = new HandlerMethod(
-				controller, 
-				controller.getClass().getMethod("handleCalculation"));
-		
-		interceptor.preHandle(request, response, handler);
 		assertNotNull(response.getHeader("Cache-Control"));
 		assertTrue(response.getHeader("Cache-Control").equals("max-age=300"));
-		assertEquals(1, response.getHeaderNames().size());
+	}
+	
+	@Test
+	public void testSpringPropertyExpressions() throws Exception {
+		this.mockMvc
+			.perform(MockMvcRequestBuilders
+			.get("/handlePropertyExpressions"))
+			.andExpect(
+				MockMvcResultMatchers.header().string("X-Java-Version", System.getProperty("java.version"))
+			);
 	}
 }
 

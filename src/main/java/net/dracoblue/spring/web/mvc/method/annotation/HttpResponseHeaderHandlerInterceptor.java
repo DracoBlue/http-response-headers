@@ -7,21 +7,28 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.expression.Expression;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.ParserContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+@Component
 public class HttpResponseHeaderHandlerInterceptor extends HandlerInterceptorAdapter implements HandlerInterceptor {
 	
 	private SpelExpressionParser parser;
 	
+	@Autowired
+	private WebApplicationContext webApplicationContext;
+	
 	public HttpResponseHeaderHandlerInterceptor() {
 		super();
-		this.parser = new SpelExpressionParser(); 
+		parser = new SpelExpressionParser();
 	}
-	
+
 	protected final void assignHttpResponseHeaders(
 			final HttpServletRequest request,
 			final HttpServletResponse response, 
@@ -35,11 +42,11 @@ public class HttpResponseHeaderHandlerInterceptor extends HandlerInterceptorAdap
 			
 			
 			if (httpResponseHeader.nameExpression()) {
-				name = (String) parser.parseExpression(name).getValue();
+				name = (String) parser.parseExpression(name, ParserContext.TEMPLATE_EXPRESSION).getValue(webApplicationContext);
 			}
 			
 			if (httpResponseHeader.valueExpression()) {
-				value = (String) parser.parseExpression(value).getValue();
+				value = (String) parser.parseExpression(value, ParserContext.TEMPLATE_EXPRESSION).getValue(webApplicationContext);
 			}
 			
 			response.setHeader(name, value);
