@@ -4,7 +4,7 @@
 	<groupId>net.dracoblue.spring</groupId>
 	<artifactId>http-response-headers</artifactId>
 	<packaging>jar</packaging>
-	<version>0.1-SNAPSHOT</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<name>http-response-headers</name>
 	<url>https://dracoblue.net</url>
 
@@ -41,6 +41,13 @@
 		</dependency>
 	</dependencies>
 
+    <distributionManagement>
+      <snapshotRepository>
+        <id>ossrh</id>
+        <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      </snapshotRepository>
+    </distributionManagement>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -48,6 +55,17 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.3</version>
 			</plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.3</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 
