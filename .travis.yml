@@ -3,6 +3,9 @@ jdk:
   - oraclejdk8
   - oraclejdk7
   - openjdk7
+before_install:
+  - openssl aes-256-cbc -pass pass:$ENCRYPTION_PASSWORD -in .travis/secring.gpg.enc -out ~/.gnupg/local.secring.gpg -d
+  - openssl aes-256-cbc -pass pass:$ENCRYPTION_PASSWORD -in .travis/pubring.gpg.enc -out ~/.gnupg/local.pubring.gpg -d
 deploy:
   - 
     provider: script
