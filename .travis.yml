@@ -4,9 +4,17 @@ jdk:
   - oraclejdk7
   - openjdk7
 deploy:
-  provider: script
-  script: .travis/deploy.sh
-  on:
-    repo: DracoBlue/http-response-headers
-    branch: master
-    jdk: oraclejdk8
+  - 
+    provider: script
+    script: .travis/deploy.sh
+    on:
+      repo: DracoBlue/http-response-headers
+      branch: master
+      jdk: oraclejdk8
+  - 
+    provider: script
+    script: .travis/deploy.sh
+    on:
+      repo: DracoBlue/http-response-headers
+      tags: true
+      jdk: oraclejdk8
