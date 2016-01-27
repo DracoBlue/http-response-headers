@@ -78,7 +78,23 @@ X-Java-Version: 1.8.0_25
 
 ## Installation
 
-TBD
+Replace VERSION with [![GitHub version](https://badge.fury.io/gh/DracoBlue%2Fhttp-response-headers.png)](https://github.com/DracoBlue/http-response-headers/releases) or 0.1.0-SNAPSHOT.
+
+Maven:
+
+``` xml
+<dependency>
+    <groupId>net.dracoblue.spring</groupId>
+    <artifactId>http-response-headers</artifactId>
+    <version>VERSION</version>
+</dependency>
+```
+
+Gradle/Grails:
+
+``` text
+compile 'net.dracoblue.spring:http-response-headers:VERSION'
+```
 
 ## Other Projects / Interesting Links
 
