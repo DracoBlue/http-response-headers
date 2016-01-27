@@ -7,7 +7,6 @@ deploy:
   provider: script
   script: .travis/deploy.sh
   on:
-    tags: true
     repo: DracoBlue/http-response-headers
-    all_branches: true
+    branch: master
     jdk: oraclejdk8
