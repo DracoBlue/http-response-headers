@@ -96,6 +96,26 @@ Gradle/Grails:
 compile 'net.dracoblue.spring:http-response-headers:VERSION'
 ```
 
+Add this to your SpringBootApplication:
+
+``` java
+@Autowired
+HttpResponseHeaderHandlerInterceptor httpResponsHeaderHandlerInterceptor;
+
+@Bean
+public WebMvcConfigurer contentNegotiatorConfigurer()
+{
+    return new WebMvcConfigurerAdapter()
+    {
+       @Override
+       public void addInterceptors(InterceptorRegistry registry)
+       {
+           registry.addInterceptor(httpResponsHeaderHandlerInterceptor);
+       }                
+    };
+}
+```
+
 ## Other Projects / Interesting Links
 
 * [spring-mvc-cache-control by foo4u](https://github.com/foo4u/spring-mvc-cache-control)
