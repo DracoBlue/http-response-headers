@@ -130,5 +130,42 @@ public class ExpressionControllerTest
 				MockMvcResultMatchers.header().string("X-Java-Version", System.getProperty("java.version"))
 			);
 	}
+
+	@Test
+	public void testOptionsRequest() throws Exception {
+		MockHttpServletResponse response = this.mockMvc
+				.perform(MockMvcRequestBuilders
+						.options("/handleCalculation"))
+				.andReturn().getResponse();
+
+		assertNull(response.getHeader("Cache-Control"));
+	}
+
+	@Test
+	public void testCorsOptionsRequest() throws Exception {
+		MockHttpServletResponse response = this.mockMvc
+				.perform(MockMvcRequestBuilders
+						.options("/handleCalculation")
+						.header("Access-Control-Request-Method", "POST")
+						.header("Origin", "https://localhost:8080")
+				)
+				.andReturn().getResponse();
+
+		assertNull(response.getHeader("Cache-Control"));
+	}
+
+	@Test
+	public void testGetRequestWithCorsHeaders() throws Exception {
+		MockHttpServletResponse response = this.mockMvc
+				.perform(MockMvcRequestBuilders
+						.get("/handleCalculation")
+						.header("Access-Control-Request-Method", "POST")
+						.header("Origin", "https://localhost:8080")
+				)
+				.andReturn().getResponse();
+
+		assertNotNull(response.getHeader("Cache-Control"));
+		assertTrue(response.getHeader("Cache-Control").equals("max-age=300"));
+	}
 }
 
