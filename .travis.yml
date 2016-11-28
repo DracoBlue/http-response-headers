@@ -12,13 +12,7 @@ deploy:
   - 
     provider: script
     script: .travis/deploy.sh
-    on:
-      repo: DracoBlue/http-response-headers
-      branch: master
-      jdk: oraclejdk8
-  - 
-    provider: script
-    script: .travis/deploy.sh
+    skip_cleanup: true
     on:
       repo: DracoBlue/http-response-headers
       tags: true

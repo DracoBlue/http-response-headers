@@ -1,5 +1,9 @@
 # net.dracoblue.spring:http-response-headers CHANGELOG
 
+# dev
+
+- use `skip_cleanup` with travis and build only tags
+
 # 0.2.0
 
 - fixed travis build for PRs
