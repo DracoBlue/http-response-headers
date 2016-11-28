@@ -1,6 +1,6 @@
 # net.dracoblue.spring:http-response-headers CHANGELOG
 
-# dev
+# 0.3.0-SNAPSHOT
 
 - use `skip_cleanup` with travis and build only tags
 
