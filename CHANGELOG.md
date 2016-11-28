@@ -3,6 +3,7 @@
 # dev
 
 - fixed travis build for PRs
+- fixed NPE in case of OPTIONS-Request with headers #1
 
 ## 0.1.0
 

@@ -57,14 +57,14 @@ public class HttpResponseHeaderHandlerInterceptor extends HandlerInterceptorAdap
 			final HttpServletRequest request,
 			final HttpServletResponse response, 
 			final Object handler) {
-		
+
+		List<HttpResponseHeader> httpResponseHeadersList = new ArrayList<HttpResponseHeader>();
+
 		if (handler == null || !(handler instanceof HandlerMethod)) {
-			return null;
+			return httpResponseHeadersList;
 		}
 
 		final HandlerMethod handlerMethod = (HandlerMethod) handler;
-
-		List<HttpResponseHeader> httpResponseHeadersList = new ArrayList<HttpResponseHeader>();
 
 		HttpResponseHeaders beanHttpResponseHeaders = handlerMethod.getBeanType().getAnnotation(HttpResponseHeaders.class);
 		if (beanHttpResponseHeaders != null) {
