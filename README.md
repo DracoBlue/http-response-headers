@@ -78,7 +78,7 @@ X-Java-Version: 1.8.0_25
 
 ## Installation
 
-Replace VERSION with [![GitHub version](https://badge.fury.io/gh/DracoBlue%2Fhttp-response-headers.png)](https://github.com/DracoBlue/http-response-headers/releases) or 0.1.0-SNAPSHOT.
+Replace VERSION with [![GitHub version](https://badge.fury.io/gh/DracoBlue%2Fhttp-response-headers.png)](https://github.com/DracoBlue/http-response-headers/releases).
 
 Maven:
 
