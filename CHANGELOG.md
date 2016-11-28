@@ -1,6 +1,6 @@
 # net.dracoblue.spring:http-response-headers CHANGELOG
 
-# dev
+# 0.2.0
 
 - fixed travis build for PRs
 - fixed NPE in case of OPTIONS-Request with headers #1
